@@ -43,7 +43,7 @@ resource "aws_nat_gateway" "mattermost-nat-gw" {
 
 resource "aws_route_table" "mattermost-private-crt" {
     vpc_id = "${aws_vpc.mattermost-vpc.id}"
-    route = {
+    route {
         cidr_block = "0.0.0.0/0"
         gateway_id = "${aws_nat_gateway.mattermost-nat-gw.id}"
     }
