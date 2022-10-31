@@ -26,3 +26,9 @@ variable "VPC_PRIVATE_SUBNET_CIDR" {
     default = "10.0.2.0/24"
   
 }
+
+variable "SG_PORTS" {
+    type = list(string)
+    default = [ 22,80,443,8065 ]
+  
+}

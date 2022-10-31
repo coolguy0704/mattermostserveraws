@@ -58,3 +58,34 @@ resource "aws_route_table_association" "mattermost-crt-private-subnet" {
     route_table_id = "${aws_route_table.mattermost-private-crt.id}"
   
 }
+
+resource "aws_security_group" "allow_tcp_icmp" {
+    vpc_id = "${aws_vpc.mattermost-vpc.id}"
+    name = "allow-tcp"
+    description = "allow tcp traffic"
+    dynamic "ingress" {
+      for_each = "${var.SG_PORTS}"
+      iterator = port
+      content {
+        from_port = port.value
+        to_port = port.value
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+      }
+    }
+    ingress {
+        from_port = -1
+        to_port = -1
+        protocol = "icmp"
+    }
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = -1
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+    tags = {
+        "Name" = "allow_tcp_icmp"
+    }
+  
+}
