@@ -43,3 +43,15 @@ variable "SG_PORTS" {
     default = [ 22,80,443,8065 ]
   
 }
+
+variable "PUBLIC_KEY_PATH" {
+    type = string
+    default = "/Users/prakashraobethapudi/Desktop/github/key_pair.pem.pub"
+  
+}
+
+variable "PRIVATE_KEY_PATH" {
+    type = string
+    default = "/Users/prakashraobethapudi/Desktop/github/key_pair.pem"
+  
+}
