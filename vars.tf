@@ -10,6 +10,17 @@ variable "AWS_AZ" {
   
 }
 
+variable "AMI_ID" {
+    type = string
+    default = "ami-09d3b3274b6c5d4aa"
+  
+}
+
+variable "INSTANCE_TYPE" {
+    type = string
+    default = "t2.micro"
+  
+}
 variable "VPC_CIDR" {
     type = string
     default = "10.0.0.0/16"
