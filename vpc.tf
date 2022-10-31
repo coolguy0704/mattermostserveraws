@@ -4,7 +4,7 @@ resource "aws_vpc" "mattermost-vpc" {
     enable_dns_hostnames = true
     instance_tenancy = "default"
     tags = {
-      "Name" = "nginx-vpc"
+      "Name" = "mattermost-vpc"
     }
 
 }
