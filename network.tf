@@ -59,12 +59,12 @@ resource "aws_route_table_association" "mattermost-crt-private-subnet" {
   
 }
 
-resource "aws_security_group" "allow_tcp_icmp" {
+resource "aws_security_group" "sg_mattermost-app-server" {
     vpc_id = "${aws_vpc.mattermost-vpc.id}"
-    name = "allow-tcp"
-    description = "allow tcp traffic"
+    name = "sg_mattermost-app-server"
+    description = "allow traffic for app server"
     dynamic "ingress" {
-      for_each = "${var.SG_PORTS}"
+      for_each = "${var.SG_PORTS_APP_SERVER}"
       iterator = port
       content {
         from_port = port.value
@@ -85,7 +85,32 @@ resource "aws_security_group" "allow_tcp_icmp" {
         cidr_blocks = ["0.0.0.0/0"]
     }
     tags = {
-        "Name" = "allow_tcp_icmp"
+        "Name" = "sg_mattermost-app-server"
     }
   
+}
+
+resource "aws_security_group" "sg_mattermost-db-server" {
+    vpc_id = "${aws_vpc.mattermost-vpc.id}"
+    name = "sg_mattermost-db-server"
+    description = "allow traffic for db server"
+    dynamic "ingress" {
+      for_each = "${var.SG_PORTS_DB_SERVER}"
+      iterator = port
+      content {
+        from_port = port.value
+        to_port = port.value
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+      }
+    }
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = -1
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+    tags = {
+        "Name" = "sg_mattermost-db-server"
+    }
 }

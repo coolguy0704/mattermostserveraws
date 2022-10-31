@@ -38,9 +38,15 @@ variable "VPC_PRIVATE_SUBNET_CIDR" {
   
 }
 
-variable "SG_PORTS" {
+variable "SG_PORTS_APP_SERVER" {
     type = list(string)
     default = [ 22,80,443,8065 ]
+  
+}
+
+variable "SG_PORTS_DB_SERVER" {
+    type = list(string)
+    default = [ 22,80,443,3306 ]
   
 }
 
