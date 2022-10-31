@@ -14,3 +14,15 @@ variable "VPC_PRIVATE_SUBNET_CIDR" {
     default = "10.0.2.0/24"
   
 }
+
+variable "AWS_REGION" {
+    type = string
+    default = "us-east-1"
+  
+}
+
+variable "AWS_AZ" {
+    type = string
+    default = "us-east-1a"
+  
+}
