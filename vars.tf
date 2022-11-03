@@ -1,63 +1,63 @@
 variable "AWS_REGION" {
-    type = string
-    default = "us-east-1"
-  
+  type    = string
+  default = "us-east-1"
+
 }
 
 variable "AWS_AZ" {
-    type = string
-    default = "us-east-1a"
-  
+  type    = string
+  default = "us-east-1a"
+
 }
 
 variable "AMI_ID" {
-    type = string
-    default = "ami-09d3b3274b6c5d4aa"
-  
+  type    = string
+  default = "ami-09d3b3274b6c5d4aa"
+
 }
 
 variable "INSTANCE_TYPE" {
-    type = string
-    default = "t2.micro"
-  
+  type    = string
+  default = "t2.micro"
+
 }
 variable "VPC_CIDR" {
-    type = string
-    default = "10.0.0.0/16"
+  type    = string
+  default = "10.0.0.0/16"
 }
 
 variable "VPC_PUBLIC_SUBNET_CIDR" {
-    type = string
-    default = "10.0.1.0/24"
-  
+  type    = string
+  default = "10.0.1.0/24"
+
 }
 
 variable "VPC_PRIVATE_SUBNET_CIDR" {
-    type = string
-    default = "10.0.2.0/24"
-  
+  type    = string
+  default = "10.0.2.0/24"
+
 }
 
 variable "SG_PORTS_APP_SERVER" {
-    type = list(string)
-    default = [ 22,80,443,8065 ]
-  
+  type    = list(string)
+  default = [22, 80, 443, 8065]
+
 }
 
 variable "SG_PORTS_DB_SERVER" {
-    type = list(string)
-    default = [ 22,80,443,3306 ]
-  
+  type    = list(string)
+  default = [22, 80, 443, 3306]
+
 }
 
 variable "PUBLIC_KEY_PATH" {
-    type = string
-    default = "/Users/prakashraobethapudi/Desktop/github/key_pair.pem.pub"
-  
+  type    = string
+  default = "/Users/prakashraobethapudi/Desktop/github/key_pair.pem.pub"
+
 }
 
 variable "PRIVATE_KEY_PATH" {
-    type = string
-    default = "/Users/prakashraobethapudi/Desktop/github/key_pair.pem"
-  
+  type    = string
+  default = "/Users/prakashraobethapudi/Desktop/github/key_pair.pem"
+
 }
