@@ -51,23 +51,6 @@ resource "aws_instance" "mattermost-db-server" {
 
 }
 
-output "db-server-private-ip" {
-  value = [aws_instance.mattermost-db-server.private_ip]
-  depends_on = [
-    aws_instance.mattermost-db-server
-  ]
-}
-/*
-data "aws_instance" "db-server-data" {
-    filter {
-      name = "tag:Name"
-      values = ["mattermost-db-server"]
-    }
-    depends_on = [
-      aws_instance.mattermost-db-server
-    ]
-}*/
-
 resource "aws_instance" "mattermost-app-server" {
   ami                    = var.AMI_ID
   instance_type          = var.INSTANCE_TYPE
@@ -86,21 +69,6 @@ resource "aws_instance" "mattermost-app-server" {
 
   }
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo yum install dos2unix -y",
-      "sudo dos2unix install_mattermost_linux.sh",
-      "sudo chmod 700 install_mattermost_linux.sh",
-      "sudo ./install_mattermost_linux.sh ${aws_instance.mattermost-db-server.private_ip}",
-      "sudo chown -R mattermost:mattermost /opt/mattermost",
-      "sudo chmod -R g+w /opt/mattermost",
-      "cd /opt/mattermost",
-      "sudo -u mattermost ./bin/mattermost"
-
-    ]
-
-  }
-
   connection {
     type        = "ssh"
     user        = "ec2-user"
@@ -112,5 +80,29 @@ resource "aws_instance" "mattermost-app-server" {
     "Name" = "mattermost-app-server"
   }
 
+}
+
+resource "null_resource" "app-server-remote-exec" {
+  connection {
+    type = "ssh"
+    user = "ec2-user"
+    host = "${aws_instance.mattermost-app-server.public_ip}"
+    private_key = file(var.PRIVATE_KEY_PATH)
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo yum install dos2unix -y",
+      "sudo dos2unix install_mattermost_linux.sh",
+      "sudo chmod 700 install_mattermost_linux.sh",
+      "sudo ./install_mattermost_linux.sh ${aws_instance.mattermost-db-server.private_ip}",
+      "sudo chown -R mattermost:mattermost /opt/mattermost",
+      "sudo chmod -R g+w /opt/mattermost",
+      "cd /opt/mattermost",
+      "nohup sudo -u mattermost ./bin/mattermost &",
+      "sleep 1"
+    ]
+    
+  }
 
 }
