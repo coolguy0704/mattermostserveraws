@@ -52,12 +52,12 @@ variable "SG_PORTS_DB_SERVER" {
 
 variable "PUBLIC_KEY_PATH" {
   type    = string
-  default = "/Users/prakashraobethapudi/Desktop/github/key_pair.pem.pub"
+  default = "PUBLIC KEY PATH"
 
 }
 
 variable "PRIVATE_KEY_PATH" {
   type    = string
-  default = "/Users/prakashraobethapudi/Desktop/github/key_pair.pem"
+  default = "PRIVATE KEY PATH"
 
 }
